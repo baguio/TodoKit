@@ -1,3 +1,3 @@
 # TodoClient
 
-A description of this package.
+A TODO that loads TODOs from a TODO backend and shows them in a TODO app.
