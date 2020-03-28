@@ -13,6 +13,7 @@ enum TodoError: Error {
 
 public class TodoInteractor {
     private let interactor = Interactor()
+    public init() {}
     
     public func get(onCompletion: @escaping CompletionHandler<[Todo]>) -> Cancelable {
         interactor.call(.GET, "/todos",
