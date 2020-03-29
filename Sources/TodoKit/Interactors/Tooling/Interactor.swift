@@ -20,6 +20,7 @@ class Interactor {
         if let content = content,
             let contentData = try? JSONEncoder().encode(content)
         {
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = contentData
         } // Ignore this error for now
         
@@ -57,5 +58,22 @@ class Interactor {
                   sending: dummyEncodable,
                   onCompletion: onCompletion)
     }
+}
 
+func intoNative(from data: Data) -> Any? {
+    try? JSONSerialization.jsonObject(with: data, options: [])
+}
+
+func intoString(from data: Data, simplify: Bool = true) -> String? {
+    var result = String(data: data, encoding: .utf8)
+    if simplify, let ogString = result {
+        result = String(ogString.unicodeScalars.filter {
+            !CharacterSet.newlines.contains($0)
+        })
+    }
+    return result
+}
+
+func intoCodable<T: Decodable>(from data: Data, type: T.Type) -> T? {
+    try? JSONDecoder().decode(type, from: data)
 }
