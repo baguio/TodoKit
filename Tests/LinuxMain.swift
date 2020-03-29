@@ -1,7 +1,7 @@
 import XCTest
 
-import TodoClientTests
+import TodoKitTests
 
 var tests = [XCTestCaseEntry]()
-tests += TodoClientTests.allTests()
+tests += TodoKitTests.allTests()
 XCTMain(tests)
