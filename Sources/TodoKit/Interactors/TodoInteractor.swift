@@ -25,4 +25,24 @@ public class TodoInteractor {
                         sending: content,
                         onCompletion: onCompletion)
     }
+    
+    public func delete(byID todoID: UUID, onCompletion: @escaping CompletionHandler<Todo>) -> Cancelable {
+        interactor.call(.POST, "/todos",
+                        sending: TodoDeleteRequest(todoID: todoID),
+                        onCompletion: onCompletion)
+    }
+}
+
+extension TodoInteractor {
+    public func delete(_ todo: Todo, onCompletion: @escaping CompletionHandler<Todo>) -> Cancelable? {
+        if let todoID = todo.id {
+            return self.delete(byID: todoID, onCompletion: onCompletion)
+        } else {
+            return nil
+        }
+    }
+}
+
+struct TodoDeleteRequest: Codable {
+    let todoID: UUID
 }
